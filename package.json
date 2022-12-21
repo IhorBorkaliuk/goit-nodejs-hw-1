@@ -19,7 +19,9 @@
   },
   "homepage": "https://github.com/IhorBorkaliuk/goit-nodejs-hw-1#readme",
   "dependencies": {
+    "commander": "^9.4.1",
     "nanoid": "^4.0.0",
-    "nodemon": "^2.0.20"
+    "nodemon": "^2.0.20",
+    "uuid": "^9.0.0"
   }
 }

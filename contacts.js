@@ -1,7 +1,6 @@
-import { nanoid } from "nanoid";
-
 const path = require("path");
 const fs = require("fs").promises;
+const { v4 } = require("uuid");
 
 const contactsPath = path.join(__dirname + "/db" + "/contacts.json");
 console.log(contactsPath);
@@ -18,8 +17,8 @@ async function listContacts() {
 async function getContactById(contactId) {
   try {
     const contacts = await listContacts();
-    const contact = contacts.find((contact) => contact.id === contactId);
-    if (!id) {
+    const contact = contacts.find(contact => contact.id === contactId);
+    if (!contact) {
       return null;
     }
     return contact;
@@ -47,7 +46,7 @@ async function addContact(name, email, phone) {
   try {
     const contacts = await listContacts();
     const addedContact = {
-      id: nanoid(),
+      id: v4(),
       name: name,
       email: email,
       phone: phone,

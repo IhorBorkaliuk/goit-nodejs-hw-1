@@ -5,8 +5,6 @@ const {
   removeContact,
 } = require("./contacts");
 
-const fs = require("fs").promises;
-
 const { Command } = require("commander");
 const program = new Command();
 program
