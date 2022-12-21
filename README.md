@@ -2,7 +2,7 @@
 
 # Отримуємо та виводимо увесь список контактів в таблицю (console.table)
 
-https://ibb.co/g9Sjv24
+https://ibb.co/WPZF1HK
 
 # Отримуємо контакт по id
 
