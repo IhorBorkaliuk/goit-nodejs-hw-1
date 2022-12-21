@@ -1,2 +1,17 @@
 # goit-nodejs-hw-1
-Перше ДЗ по Node.js
+
+# Отримуємо та виводимо увесь список контактів в таблицю (console.table)
+
+https://ibb.co/4WsGHLT
+
+# Отримуємо контакт по id
+
+https://ibb.co/gwGWRkV
+
+# Додаємо контакт
+
+https://ibb.co/nrHprH5
+
+# Видаляємо контакт
+
+https://ibb.co/YNpV1Qn
