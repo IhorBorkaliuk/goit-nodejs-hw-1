@@ -1,78 +1,53 @@
-import { nanoid } from "nanoid";
-
-const path = require("path");
-const fs = require("fs").promises;
-
-
-const contactsPath = path.join(__dirname + "/db" + "/contacts.json");
-console.log(contactsPath);
-
-async function listContacts() {
-    try {
-        const response = await fs.readFile(contactsPath);
-        const contacts = JSON.parse(response);
-        return contacts
-        
-    } catch (error) {
-        console.log(error)
-    }
-
-}
-async function getContactById(contactId) {
-  try {
-      const contacts = await listContacts();
-      const contact = contacts.find(contact => contact.id === contactId)
-      if (!id) {
-          return null
-      }
-      return contact
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-async function removeContact(contactId) {
-    try {
-            const contacts = await listContacts();
-            const idx = contacts.findIndex(
-              (contact) => contacts.id === contactId
-            );
-            if (idx === -1) {
-              return null;
-            }
-            const deletedContact = contacts.splice(idx, 1);
-            fs.writeFile(contactsPath, JSON.stringify(contacts));
-            return deletedContact;
-        
-    } catch (error) {
-        console.log(error);
-    }
-}
-
-async function addContact(name, email, phone) {
-  try {
-      const contacts = await listContacts();
-      const addedContact = {
-        id: nanoid(),
-        name: name,
-        email: email,
-        phone: phone,
-      };
-      contacts.push(addedContact)
-      await fs.writeFile(contactsPath, JSON.stringify(contacts))
-      return addedContact
-
-  } catch (error) {
-        console.log(error);
-  }
-}
-
-module.exports = {
+const {
   listContacts,
   getContactById,
   addContact,
   removeContact,
-};
+} = require("./contacts");
+
+const fs = require("fs").promises;
+
+const { Command } = require("commander");
+const program = new Command();
+program
+  .option("-a, --action <type>", "choose action")
+  .option("-i, --id <type>", "user id")
+  .option("-n, --name <type>", "user name")
+  .option("-e, --email <type>", "user email")
+  .option("-p, --phone <type>", "user phone");
+
+program.parse(process.argv);
+
+const argv = program.opts();
+
+async function invokeAction({ action, id, name, email, phone }) {
+  switch (action) {
+    case "list":
+          const contacts = await listContacts()
+          console.table(contacts)
+      break;
+
+    case "get":
+          const contact = await getContactById(id);
+          console.table(contact)
+      break;
+
+    case "add":
+          const addedContact = await addContact({ email, phone, id, name })
+          console.table(addedContact)
+      break;
+
+    case "remove":
+          const deletedContact = await removeContact(id);
+          console.log(deletedContact)
+      break;
+
+    default:
+      console.warn("\x1B[31m Unknown action type!");
+  }
+}
+
+invokeAction(argv);
 
 
 
